@@ -11,7 +11,6 @@ services:
     networks:
       - dev
   app:
-    build:
-      context: ./
+    build: ./
     networks:
       - dev
