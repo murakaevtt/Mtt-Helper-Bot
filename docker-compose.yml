@@ -1,0 +1,17 @@
+networks:
+  dev:
+
+services:
+  db:
+    image: postgres:latest
+    ports:
+      - "5438:5432"
+    depends_on:
+      - app
+    networks:
+      - dev
+  app:
+    build:
+      context: ./
+    networks:
+      - dev
