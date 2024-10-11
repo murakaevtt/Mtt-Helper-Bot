@@ -27,10 +27,10 @@ class Reg(StatesGroup):
 async def start(message: Message) -> None:
     await rq.set_user(
         tg_id=int(message.from_user.id),
-        chat_id=int(message.chat.id),
         first_name=str(message.from_user.first_name),
         last_name=str(message.from_user.last_name),
         is_premium=bool(message.from_user.is_premium),
+        is_admin=False
     )
     await message.answer(f"Привет, {message.from_user.first_name}!\nЖми /help", reply_markup=kb.main)
 

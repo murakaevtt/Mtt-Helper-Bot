@@ -20,10 +20,10 @@ class User(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     tg_id = mapped_column(BigInteger)
-    chat_id = mapped_column(BigInteger)
     first_name: Mapped[str] = mapped_column(String(40))
     last_name: Mapped[str] = mapped_column(String(40))
     is_premium: Mapped[bool] = mapped_column()
+    is_admin: Mapped[bool] = mapped_column()
 
 
 class CSGO_ranks(Base):

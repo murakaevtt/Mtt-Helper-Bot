@@ -4,38 +4,43 @@ from sqlalchemy import select
 
 
 async def set_user(
-    tg_id: int, chat_id: int, first_name: str, last_name: str, is_premium: bool
+    tg_id: int,
+    first_name: str,
+    last_name: str,
+    is_premium: bool,
+    is_admin: bool,
 ) -> None:
     async with async_session() as session:
         user = await session.scalar(select(User).where(User.tg_id == tg_id))
-        chat = await session.scalar(select(User).where(User.chat_id == chat_id))
         f_name = await session.scalar(select(User).where(User.first_name == first_name))
         l_name = await session.scalar(select(User).where(User.last_name == last_name))
         premium = await session.scalar(
             select(User).where(User.is_premium == is_premium)
         )
+        admin = await session.scalar(select(User).where(User.is_admin == is_admin))
 
         if not user:
             session.add(
                 User(
                     tg_id=tg_id,
-                    chat_id=chat_id,
                     first_name=first_name,
                     last_name=last_name,
                     is_premium=is_premium,
+                    is_admin=is_admin,
                 )
             )
             await session.commit()
 
-        if not f_name or not l_name or not premium:
-            session.query(User).filter(User.tg_id == tg_id).update(
-                {
-                    User.first_name: first_name,
-                    User.last_name: last_name,
-                    User.is_premium: is_premium,
-                }
-            )
-            await session.commit()
+        # if not f_name or not l_name or not premium or not admin:
+        #     session.query(User).filter(User.tg_id == tg_id).update(
+        #         {
+        #             User.first_name: first_name,
+        #             User.last_name: last_name,
+        #             User.is_premium: is_premium,
+        #             User.is_admin: is_admin,
+        #         }
+        #     )
+        #     await session.commit()
 
 
 async def get_rank(id):
