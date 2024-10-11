@@ -26,8 +26,8 @@ class User(Base):
     is_admin: Mapped[bool] = mapped_column()
 
 
-class CSGO_ranks(Base):
-    __tablename__ = "CSGO_ranks"
+class Ranks(Base):
+    __tablename__ = "ranks"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(20))

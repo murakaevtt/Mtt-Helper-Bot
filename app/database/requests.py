@@ -1,5 +1,5 @@
 from app.database.models import async_session
-from app.database.models import User, CSGO_ranks
+from app.database.models import User, Ranks
 from sqlalchemy import select
 
 
@@ -45,4 +45,4 @@ async def set_user(
 
 async def get_rank(id):
     async with async_session() as session:
-        return await session.scalar(select(CSGO_ranks.link).where(CSGO_ranks.id == id))
+        return await session.scalar(select(Ranks.link).where(Ranks.id == id))

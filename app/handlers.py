@@ -16,6 +16,7 @@ import app.database.requests as rq
 helpTxt = get_help_txt()
 rt = Router()
 
+
 class Reg(StatesGroup):
     a = State()
     b = State()
@@ -30,31 +31,37 @@ async def start(message: Message) -> None:
         first_name=str(message.from_user.first_name),
         last_name=str(message.from_user.last_name),
         is_premium=bool(message.from_user.is_premium),
-        is_admin=False
+        is_admin=False,
     )
-    await message.answer(f"Привет, {message.from_user.first_name}!\nЖми /help", reply_markup=kb.main)
+    await message.answer(
+        f"Привет, {message.from_user.first_name}!\nЖми /help", reply_markup=kb.main
+    )
 
 
 @rt.message(Command("help"))
 async def cmd_help(message: Message) -> None:
     await message.answer(helpTxt, parse_mode="Markdown")
-    
-    
+
+
 @rt.message(F.photo)
 async def photo_handler(message: Message):
     photo_data = message.photo[-1]
-    
+
     await message.answer(f"{photo_data}")
-    
+
 
 @rt.message(Command("checkcurrencies"))
 async def print_currency(message: Message) -> None:
     date = dt.datetime.now().strftime("%d/%m/%Y")
     currencies = get_currency()
-    await message.answer(f"Курсы валют на сегодня:\n\nUSD: {currencies["USD"]}₽.\nEUR: {currencies["EUR"]}₽.\nCNY: {currencies["CNY"]}₽.\n\nДата: {date}.")
+    await message.answer(
+        f"Курсы валют на сегодня:\n\nUSD: {currencies['USD']}₽.\nEUR: {currencies['EUR']}₽.\nCNY: {currencies['CNY']}₽.\n\nДата: {date}."
+    )
+
 
 # Math
-#---------------------
+# ---------------------
+
 
 @rt.message(Command("solvequadraticequation"))
 async def get_a(message: Message, state: FSMContext) -> None:
@@ -81,7 +88,7 @@ async def print_answer(message: Message, state: FSMContext) -> None:
     await state.update_data(c=message.text)
     data = await state.get_data()
     a, b, c = float(data["a"]), float(data["b"]), float(data["c"])
-    discr = b ** 2 - 4 * a * c
+    discr = b**2 - 4 * a * c
     await message.answer("Дискриминант D = %.2f" % discr)
     if discr > 0:
         x1 = (-b + math.sqrt(discr)) / (2 * a)
@@ -94,20 +101,23 @@ async def print_answer(message: Message, state: FSMContext) -> None:
         await message.answer("Корней нет")
     await state.clear()
 
+
 # Games
-#---------------------
+# ---------------------
+
 
 @rt.message(Command("elotorank"))
 async def get_elo(message: Message, state: FSMContext) -> None:
     await state.set_state(Reg.elo)
     await message.answer("Введите ваш elo")
 
+
 @rt.message(Reg.elo)
 async def print_elo(message: Message, state: FSMContext) -> None:
     await state.update_data(elo=message.text)
     data = await state.get_data()
     elo = int(data["elo"])
-    
+
     if elo < 1000:
         await message.answer("Ело не может быть меньше 1000, запустите команду ещё раз")
     elif elo >= 1000 and elo < 2816:
@@ -146,5 +156,5 @@ async def print_elo(message: Message, state: FSMContext) -> None:
         await message.answer_photo(photo=str(await rq.get_rank(17)))
     else:
         await message.answer_photo(photo=str(await rq.get_rank(18)))
-          
+
     await state.clear()
