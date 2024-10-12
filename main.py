@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from app.handlers import rt
 from app.database.models import async_main
 
-log = True
+log = False
 
 
 async def main():

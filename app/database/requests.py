@@ -14,9 +14,7 @@ async def set_user(
         user = await session.scalar(select(User).where(User.tg_id == tg_id))
         f_name = await session.scalar(select(User).where(User.first_name == first_name))
         l_name = await session.scalar(select(User).where(User.last_name == last_name))
-        premium = await session.scalar(
-            select(User).where(User.is_premium == is_premium)
-        )
+        premium = await session.scalar(select(User).where(User.is_premium == is_premium))
         admin = await session.scalar(select(User).where(User.is_admin == is_admin))
 
         if not user:
