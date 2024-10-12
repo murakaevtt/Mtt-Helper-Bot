@@ -14,7 +14,7 @@ async def main():
     bot = Bot(token=os.getenv("TOKEN"))
     dp = Dispatcher()
     dp.include_router(rt)
-    if logging:
+    if log:
         logging.basicConfig(level=logging.INFO)
     await dp.start_polling(bot)
 
