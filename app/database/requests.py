@@ -44,3 +44,7 @@ async def set_user(
 async def get_rank(id):
     async with async_session() as session:
         return await session.scalar(select(Ranks.link).where(Ranks.id == id))
+
+async def get_user_rank(tg_id):
+    async with async_session() as session:
+        return await session.scalar(select(User.is_admin).where(User.tg_id == tg_id))

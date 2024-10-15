@@ -11,10 +11,11 @@ import math
 from aiohttp.web_routedef import route
 
 import app.keyboard as kb
+import app.admin.admin_keyboard as admin_kb
 import app.database.requests as rq
 
 helpTxt = get_help_txt()
-rt = Router()
+router = Router()
 
 
 class Reg(StatesGroup):
@@ -24,7 +25,7 @@ class Reg(StatesGroup):
     elo = State()
 
 
-@rt.message(CommandStart())
+@router.message(CommandStart())
 async def start(message: Message) -> None:
     await rq.set_user(
         tg_id=int(message.from_user.id),
@@ -38,19 +39,19 @@ async def start(message: Message) -> None:
     )
 
 
-@rt.message(Command("help"))
+@router.message(Command("help"))
 async def cmd_help(message: Message) -> None:
     await message.answer(helpTxt, parse_mode="Markdown")
 
 
-@rt.message(F.photo)
+@router.message(F.photo)
 async def photo_handler(message: Message):
     photo_data = message.photo[-1]
 
     await message.answer(f"{photo_data}")
 
 
-@rt.message(Command("checkcurrencies"))
+@router.message(Command("checkcurrencies"))
 async def print_currency(message: Message) -> None:
     date = dt.datetime.now().strftime("%d/%m/%Y")
     currencies = get_currency()
@@ -63,27 +64,27 @@ async def print_currency(message: Message) -> None:
 # ---------------------
 
 
-@rt.message(Command("solvequadraticequation"))
+@router.message(Command("solvequadraticequation"))
 async def get_a(message: Message, state: FSMContext) -> None:
     await state.set_state(Reg.a)
     await message.answer("Введите коэффициент a")
 
 
-@rt.message(Reg.a)
+@router.message(Reg.a)
 async def get_b(message: Message, state: FSMContext) -> None:
     await state.update_data(a=message.text)
     await state.set_state(Reg.b)
     await message.answer("Введите коэффициент b")
 
 
-@rt.message(Reg.b)
+@router.message(Reg.b)
 async def get_c(message: Message, state: FSMContext) -> None:
     await state.update_data(b=message.text)
     await state.set_state(Reg.c)
     await message.answer("Введите коэффициент c")
 
 
-@rt.message(Reg.c)
+@router.message(Reg.c)
 async def print_answer(message: Message, state: FSMContext) -> None:
     await state.update_data(c=message.text)
     data = await state.get_data()
@@ -106,13 +107,13 @@ async def print_answer(message: Message, state: FSMContext) -> None:
 # ---------------------
 
 
-@rt.message(Command("elotorank"))
+@router.message(Command("elotorank"))
 async def get_elo(message: Message, state: FSMContext) -> None:
     await state.set_state(Reg.elo)
     await message.answer("Введите ваш elo")
 
 
-@rt.message(Reg.elo)
+@router.message(Reg.elo)
 async def print_elo(message: Message, state: FSMContext) -> None:
     await state.update_data(elo=message.text)
     data = await state.get_data()
