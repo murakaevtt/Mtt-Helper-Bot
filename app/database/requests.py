@@ -1,5 +1,5 @@
 from app.database.models import async_session
-from app.database.models import User, Ranks
+from app.database.models import User, Ranks, Mirage
 from sqlalchemy import select
 
 
@@ -48,3 +48,7 @@ async def get_rank(id):
 async def get_user_rank(tg_id):
     async with async_session() as session:
         return await session.scalar(select(User.is_admin).where(User.tg_id == tg_id))
+
+async def get_mirage_links(id):
+    async with async_session() as session:
+        return await session.scalar(select(Mirage.link).where(Mirage.id == id))

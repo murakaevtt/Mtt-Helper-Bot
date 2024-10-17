@@ -159,3 +159,34 @@ async def print_elo(message: Message, state: FSMContext) -> None:
         await message.answer_photo(photo=str(await rq.get_rank(18)))
 
     await state.clear()
+
+
+@router.message(Command("raskid"))
+async def choose_map(message: Message):
+    await message.answer("Выберите карту", reply_markup=kb.cs_map)
+
+
+@router.callback_query(F.data == "mirage")    
+async def choose_side(query: CallbackQuery):
+    await query.answer("Вы выбрали мираж")
+    await query.message.edit_text(text="Выберите сторону", reply_markup=kb.mirage_cs_side)
+
+
+@router.callback_query(F.data == "back")
+async def back(query: CallbackQuery):
+    await query.message.edit_text(text="Выберите карту", reply_markup=kb.cs_map)
+    await query.answer("Вы вернулись в начало меню")
+    
+
+@router.callback_query(F.data == "mirage_t_side")
+async def mirage_t_side(query: CallbackQuery):
+    await query.answer("Вы выбрали т-сторону")
+    await query.message.edit_text(text="Выберите вариант раскида", reply_markup=kb.mirage_raskid_t)
+
+
+@router.callback_query(F.data == "mirage_smoke_city")
+async def mirage_smoke_city(callback: CallbackQuery):
+    await callback.answer("Вы выбрали смок на сити")
+    await callback.message.answer(text="Источник: https://profilerr.net/ru/raskidki-na-karte-mirage-v-cs-2-smoki-fleshki-molotovy/")
+    await callback.message.answer_photo(photo=str(await rq.get_mirage_links(1)), caption="Становимся в упор к металлическому перилу. Ориентиром будет вот этот угол на стенке. Используйте jumpthrow, как только будете готовы.")
+    await callback.message.answer_photo(photo=str(await rq.get_mirage_links(2)), caption="Смок идеально закроет КТ. Вы можете не опасаться, что игрок сможет залезть на ящик, так как этот нюанс смок также с легкостью контрит.")

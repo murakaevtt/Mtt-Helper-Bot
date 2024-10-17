@@ -34,6 +34,14 @@ class Ranks(Base):
     link: Mapped[str] = mapped_column(String(100))
 
 
+class Mirage(Base):
+    __tablename__ = "mirage"
+    
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(20))
+    link: Mapped[str] = mapped_column(String(100))
+
+
 async def async_main():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
