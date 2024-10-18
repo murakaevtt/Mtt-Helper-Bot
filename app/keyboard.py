@@ -30,5 +30,6 @@ mirage_raskid_t = InlineKeyboardMarkup(
     inline_keyboard=[
         [InlineKeyboardButton(text="<< Назад <<", callback_data="back")],
         [InlineKeyboardButton(text="Смок на сити", callback_data="mirage_smoke_city")],
+        [InlineKeyboardButton(text="Смок на стеирс", callback_data="mirage_smoke_stairs")],
     ]
 )
