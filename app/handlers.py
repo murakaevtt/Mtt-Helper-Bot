@@ -199,3 +199,10 @@ async def mirage_smoke_stairs(callback: CallbackQuery):
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(3)), caption="Поднявшись наверх в рампе террористов, упритесь в среднюю балку на стене.")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(4)), caption="Здесь очень нетипичный ориентир. Может показаться, что я просто навелся в небо, но, посмотрев ниже, можно увидеть, что от значка террористов идет белая линия, которую нужно выровнять по левому углу этого выступа.")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(5)), caption="Смок на стеирс Мираж КС 2 (на голову) идеально закрывает ступеньки и еще немного просмотр плента с кона, не перекрывая при этом место, где любят прятаться противники при обычном смоке на стеирс.")
+
+
+@router.callback_query(F.data == "mirage_smoke_jungle_conn")
+async def mirage_smoke_jungle_conn(callback: CallbackQuery):
+    await callback.answer("Вы выбрали смок на джангл+конн")
+    await callback.message.answer(text="Источник: https://profilerr.net/ru/raskidki-na-karte-mirage-v-cs-2-smoki-fleshki-molotovy/")
+    await callback.message.answer_photo()
