@@ -105,6 +105,7 @@ async def print_answer(message: Message, state: FSMContext) -> None:
 
 # Games
 # ---------------------
+# CS2 -------------------------------------------------------------------------------------------------------
 
 
 @router.message(Command("elotorank"))
@@ -174,7 +175,7 @@ async def back(query: CallbackQuery):
 
 @router.callback_query(F.data == "mirage")    
 async def choose_side(query: CallbackQuery):
-    await query.answer("Вы выбрали мираж")
+    await query.answer("Вы выбрали мираж\nВся информация взята с сайта: https://profilerr.net/ru/raskidki-na-karte-mirage-v-cs-2-smoki-fleshki-molotovy/")
     await query.message.edit_text(text="Выберите сторону", reply_markup=kb.mirage_cs_side)
     
 
@@ -182,6 +183,15 @@ async def choose_side(query: CallbackQuery):
 async def mirage_t_side(query: CallbackQuery):
     await query.answer("Вы выбрали т-сторону")
     await query.message.edit_text(text="Выберите вариант раскида", reply_markup=kb.mirage_t_type_of_grenade)
+
+
+@router.callback_query(F.data == "mirage_ct_side")
+async def mirage_ct_side(query: CallbackQuery):
+    await query.answer("Вы выбрали кт-сторону")
+    await query.message.edit_text(text="Выберите вариант раскида", reply_markup=kb.mirage_ct_type_of_grenade)
+
+
+# Mirage Terrorist smokes -----------------------------------------------------------------------------------
 
 
 @router.callback_query(F.data == "mirage_t_smokes")
@@ -193,7 +203,6 @@ async def mirage_t_smokes(query: CallbackQuery):
 @router.callback_query(F.data == "mirage_smoke_city")
 async def mirage_smoke_city(callback: CallbackQuery):
     await callback.answer("Вы выбрали смок на сити")
-    await callback.message.answer(text="Источник: https://profilerr.net/ru/raskidki-na-karte-mirage-v-cs-2-smoki-fleshki-molotovy/")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(1)), caption="Становимся в упор к металлическому перилу. Ориентиром будет вот этот угол на стенке. Используйте jumpthrow, как только будете готовы.")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(2)), caption="Смок идеально закроет КТ. Вы можете не опасаться, что игрок сможет залезть на ящик, так как этот нюанс смок также с легкостью контрит.")
 
@@ -201,7 +210,6 @@ async def mirage_smoke_city(callback: CallbackQuery):
 @router.callback_query(F.data == "mirage_smoke_stairs")
 async def mirage_smoke_stairs(callback: CallbackQuery):
     await callback.answer("Вы выбрали смок на стеирс")
-    await callback.message.answer(text="Источник: https://profilerr.net/ru/raskidki-na-karte-mirage-v-cs-2-smoki-fleshki-molotovy/")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(3)), caption="Поднявшись наверх в рампе террористов, упритесь в среднюю балку на стене.")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(4)), caption="Здесь очень нетипичный ориентир. Может показаться, что я просто навелся в небо, но, посмотрев ниже, можно увидеть, что от значка террористов идет белая линия, которую нужно выровнять по левому углу этого выступа.")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(5)), caption="Смок на стеирс Мираж КС 2 (на голову) идеально закрывает ступеньки и еще немного просмотр плента с кона, не перекрывая при этом место, где любят прятаться противники при обычном смоке на стеирс.")
@@ -210,7 +218,6 @@ async def mirage_smoke_stairs(callback: CallbackQuery):
 @router.callback_query(F.data == "mirage_smoke_jungle_conn")
 async def mirage_smoke_jungle_conn(callback: CallbackQuery):
     await callback.answer("Вы выбрали смок на джангл+конн")
-    await callback.message.answer(text="Источник: https://profilerr.net/ru/raskidki-na-karte-mirage-v-cs-2-smoki-fleshki-molotovy/")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(6)), caption="Позиция почти та же, что и для смока стеирс, но немного левее вы можете увидеть деревянную доску, ориентиром будет вот эта черная линия.")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(7)), caption="Развернувшись, наведитесь на серую точку на этом выступе и киньте смок без прыжка.")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(8)), caption="Этот смок ложится немного глубже, чем дефолтный, не выступая при этом на лавочку, что создавало небольшой ванвей для кт-шников.")
@@ -219,7 +226,6 @@ async def mirage_smoke_jungle_conn(callback: CallbackQuery):
 @router.callback_query(F.data == "mirage_smoke_outside_conn")
 async def mirage_smoke_outside_conn(callback: CallbackQuery):
     await callback.answer("Вы выбрали смок в коннектор")
-    await callback.message.answer(text="Источник: https://profilerr.net/ru/raskidki-na-karte-mirage-v-cs-2-smoki-fleshki-molotovy/")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(9)), caption="Становитесь перед урной на респауне. Также отсюда дают дым в окно на Мираже в КС 2.")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(10)), caption="Сидя, прицельтесь на правый верхний угол этого окна и начинайте ползти вперед.")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(11)), caption="Когда ваш прицел спустится к началу ковра, нажмите jumpthrow.")
@@ -229,7 +235,6 @@ async def mirage_smoke_outside_conn(callback: CallbackQuery):
 @router.callback_query(F.data == "mirage_smoke_window")
 async def mirage_smoke_window(callback: CallbackQuery):
     await callback.answer("Вы выбрали смок в окно")
-    await callback.message.answer(text="Источник: https://profilerr.net/ru/raskidki-na-karte-mirage-v-cs-2-smoki-fleshki-molotovy/")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(13)), caption="Основной смок на этой мапе – дым в окно Мираж КС 2. Позиция все та же, что и для смока в кон.")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(14)), caption="Наведитесь немного левее от края большой серой полосы и, зажав “D”, киньте смок с jumpthrow.")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(15)), caption="Эти смоки в окно на мираже КС 2 попадают ровно в середину и прекрасно перекрывают вид для занятия мидла.")
@@ -238,7 +243,6 @@ async def mirage_smoke_window(callback: CallbackQuery):
 @router.callback_query(F.data == "mirage_smoke_start_mid")
 async def mirage_smoke_start_mid(callback: CallbackQuery):
     await callback.answer("Вы выбрали смок на старт мида")
-    await callback.message.answer(text="Источник: https://profilerr.net/ru/raskidki-na-karte-mirage-v-cs-2-smoki-fleshki-molotovy/")
     await callback.message.answer("Для этого смока нужно залезть на верх мусорной урны.")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(16)), caption="Прицелившись на правый край антенны, просто киньте смок с помощью ЛКМ.")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(17)), caption="Этот смок очень вариативен, под него вы можете пробежать за ящики или, прицелившись, попросить тиммейта взорвать его, застав при этом игрока в окне врасплох.")
@@ -247,7 +251,6 @@ async def mirage_smoke_start_mid(callback: CallbackQuery):
 @router.callback_query(F.data == "mirage_smoke_arches_b")
 async def mirage_smoke_arches_b(callback: CallbackQuery):
     await callback.answer("Вы выбрали смок на арки Б")
-    await callback.message.answer(text="Источник: https://profilerr.net/ru/raskidki-na-karte-mirage-v-cs-2-smoki-fleshki-molotovy/")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(18)), caption="Кидаются они вот с этих двух позиций. При идеальном раскладе эту раскидку должны выполнять синхронно два игрока.")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(19)), caption="Правая арка дается с левой стороны. Выровняйте доску так, чтобы она перекрывала только половину окна, затем прицельтесь на выступ крыши и нажмите jumpthrow.")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(20)), caption="Этот смок на эдвард обезопасит вас от возможного кросфаера со стороны оппонентов.")
@@ -258,7 +261,6 @@ async def mirage_smoke_arches_b(callback: CallbackQuery):
 @router.callback_query(F.data == "mirage_smoke_window_kitchen")
 async def mirage_smoke_window_kitchen(callback: CallbackQuery):
     await callback.answer("Вы выбрали смок на окно кухни")
-    await callback.message.answer(text="Источник: https://profilerr.net/ru/raskidki-na-karte-mirage-v-cs-2-smoki-fleshki-molotovy/")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(23)), caption="Займите этот угол в Б-апартаментах.")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(24)), caption="Наведитесь на верхний выступ башни и с помощью jumpthrow киньте смок.")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(25)), caption="Этот смок на китчен залетает в середину окна и не сильно выпирает наружу, позволяя увидеть соперника, если тот захочет выпрыгнуть за плент.")
@@ -267,6 +269,56 @@ async def mirage_smoke_window_kitchen(callback: CallbackQuery):
 @router.callback_query(F.data == "mirage_smoke_kitchen")
 async def mirage_smoke_kitchen(callback: CallbackQuery):
     await callback.answer("Вы выбрали смок на выход кухни")
-    await callback.message.answer(text="Источник: https://profilerr.net/ru/raskidki-na-karte-mirage-v-cs-2-smoki-fleshki-molotovy/")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(26)), caption="Также с этой позиции прицельтесь на выступ между двумя окнами — jumpthrow и смок в мейне.")
     await callback.message.answer_photo(photo=str(await rq.get_mirage_links(27)))
+
+
+# Mirage Counter-Terrorist smokes -----------------------------------------------------------------------------------
+
+
+@router.callback_query(F.data == "mirage_ct_smokes")
+async def mirage_t_smokes(query: CallbackQuery):
+    await query.answer("Вы выбрали смоки")
+    await query.message.edit_text(text="Выберите место", reply_markup=kb.mirage_places_smoke_ct)
+
+
+@router.callback_query(F.data == "mirage_smoke_pit")
+async def mirage_smoke_pit(callback: CallbackQuery):
+    await callback.answer("Вы выбрали смок в яму")
+    await callback.message.answer_photo(photo=str(await rq.get_mirage_links(28)), caption="Упритесь спиной в металлические трубы.")
+    await callback.message.answer_photo(photo=str(await rq.get_mirage_links(29)), caption="Развернувшись, прицельтесь немного выше надписей на ящике и киньте смок с ЛКМ.")
+    await callback.message.answer_photo(photo=str(await rq.get_mirage_links(30)), caption="Яма идеально закрыта без щелей, только опасайтесь умников, которые любят выйти в смок, занимая тетрис.")
+    
+
+@router.callback_query(F.data == "mirage_smoke_conn")
+async def mirage_smoke_conn(callback: CallbackQuery):
+    await callback.answer("Вы выбрали смок в коннектор")
+    await callback.message.answer_photo(photo=str(await rq.get_mirage_links(31)), caption="Каждый игрок коннектора должен знать этот смок. На начале раунда киньте смок немного левее этого выступа на стене шорта. Довольно сложно кинуть его правильно с первого раза, но спустя несколько попыток у вас однозначно получится.")
+    await callback.message.answer_photo(photo=str(await rq.get_mirage_links(32)), caption="Смок создаст вам небольшой ванвей, а также потушит молотов, который часто дают игроки атаки.")
+    await callback.message.answer_photo(photo=str(await rq.get_mirage_links(33)), caption="Примерно так он выглядит от лица атаки. Довольно сложно увидеть вас, не правда ли?")
+
+
+@router.callback_query(F.data == "mirage_smoke_palace")
+async def mirage_smoke_palace(callback: CallbackQuery):
+    await callback.answer("Вы выбрали смок в палас")
+    await callback.message.answer_photo(photo=str(await rq.get_mirage_links(34)), caption="Становимся в угол на выходе из кухни.")
+    await callback.message.answer_photo(photo=str(await rq.get_mirage_links(35)), caption="Наведитесь посередине края правого окна и киньте смок с помощью jumpthrow.")
+    await callback.message.answer_photo(photo=str(await rq.get_mirage_links(36)))
+
+
+@router.callback_query(F.data == "mirage_smoke_mid")
+async def mirage_smoke_mid(callback: CallbackQuery):
+    await callback.answer("Вы выбрали смок закрывающий вход на мид")
+    await callback.message.answer_photo(photo=str(await rq.get_mirage_links(37)), caption="На начале раунда станьте в этот угол и проинформируйте тиммейтов о своем плане.")
+    await callback.message.answer_photo(photo=str(await rq.get_mirage_links(38)), caption="Прицельтесь на начало антенны и, зажав кнопку “D”, начинайте бежать.")
+    await callback.message.answer_photo(photo=str(await rq.get_mirage_links(39)), caption="Когда ваш прицел будет примерно на середине, не сбавляя темп, нажмите jumpthrow.")
+    await callback.message.answer_photo(photo=str(await rq.get_mirage_links(40)), caption="Граната стабильно прилетает в мид, не давая собрать террористам информацию и затрудняя их выход.")
+
+
+@router.callback_query(F.data == "mirage_smoke_ups")
+async def mirage_smoke_ups(callback: CallbackQuery):
+    await callback.answer("Вы выбрали смок в апсы")
+    await callback.message.answer_photo(photo=str(await rq.get_mirage_links(41)), caption="При выходе из мейна упритесь в мусорный бак.")
+    await callback.message.answer_photo(photo=str(await rq.get_mirage_links(42)), caption="Прицельтесь немного левее серой точки на зеленом брезенте — нажмите ЛКМ.")
+    await callback.message.answer_photo(photo=str(await rq.get_mirage_links(43)))
+    

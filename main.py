@@ -6,7 +6,7 @@ from app.handlers import router
 from app.admin.admin_handlers import admin_router
 from app.database.models import async_main
 
-log = True
+log = False
 
 
 async def main():
