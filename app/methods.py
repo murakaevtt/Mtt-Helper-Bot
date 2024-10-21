@@ -2,7 +2,7 @@ import datetime as dt, pandas as pd, codecs, math
 
 
 def get_help_txt() -> str:
-    with codecs.open("src/txt/help.txt", "r", "utf_8_sig") as file:
+    with codecs.open("/opt/Mtt-Helper-Bot/src/txt/help.txt", "r", "utf_8_sig") as file:
         lines = file.readlines()
         output = "".join(lines)
     return output
